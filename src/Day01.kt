@@ -1,21 +1,42 @@
+import kotlin.math.abs
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
-    }
-
-    fun part2(input: List<String>): Int {
-        return input.size
-    }
-
-    // Test if implementation meets criteria from the description, like:
-    check(part1(listOf("test_input")) == 1)
-
-    // Or read a large test input from the `src/Day01_test.txt` file:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    // Read the input from the `src/Day01.txt` file.
     val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+    val leftList = mutableListOf<Int>()
+    val rightList = mutableListOf<Int>()
+    var totalDistance = 0
+
+    fun part1(){
+        for(value in input) {
+            val coordinates = value.split("   ")
+            leftList.add(coordinates[0].toInt())
+            rightList.add(coordinates[1].toInt())
+        }
+
+        leftList.sort()
+        rightList.sort()
+
+        for (value in leftList.indices) {
+            totalDistance += abs(leftList[value] - rightList[value])
+        }
+
+        println("Left List: $leftList")
+        println("Right List: $rightList")
+        println("Total Distance: $totalDistance")
+    }
+
+    fun part2() {
+        var similarityScore = 0
+        for (leftValue in leftList.indices) {
+            for (rightValue in rightList.indices) {
+                if(leftList[leftValue] == rightList[rightValue]) {
+                    similarityScore += leftList[leftValue]
+                }
+            }
+        }
+        println("Similarity Score: $similarityScore")
+    }
+
+    part1()
+    part2()
 }
